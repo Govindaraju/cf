@@ -1,0 +1,27 @@
+contract Splitter {
+    address one;
+    address two;
+
+    function Splitter(address _two) {
+        if (msg.value > 0) throw;
+        one = msg.sender;
+        two = _two;
+    }
+
+    function () {
+        uint amount = this.balance / 3;
+        if (!one.call.value(amount)()) throw;
+        if (!two.call.value(amount)()) throw;
+    }
+}
+
+Bug
+
+1. Need to check address _two is not same as msg.sender
+2. Why balance is getting divided all the time, shouldn't it be msg.value/3 that should be divided instead ?
+3. If the attacker makes address two an invalid one, then he can keep on sending a negligible amount to the contract and receive 1/3rd
+of the balance everytime. (Assuming addrress one is the attacker himself)
+4. this.balance is not reduced after each distribution
+5. In case of a distribution its better to design the system to be PULL (withdraw) one instead of PUSH one.
+6. We need to store in a map the amount they are entitled before distributing the amount
+	e.g. map(address => uint256) entitledAmount;

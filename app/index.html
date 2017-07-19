@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crowd Funding Application</title>
+  <base href="." />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href="./app.css" rel='stylesheet' type='text/css'>
+  <script src="./app.js"></script>
+  <script src="./fundingHub.js"></script>
+</head>
+<body ng-app="fundinghub" ng-controller="fundinghubController">
+  <h1>Crowd Funding Application</h1><br>
+  
+  <span id="status"><font color="green">Currentt Status</font></span>
+  
+  <fieldset>
+    <span for="id"></span><br>
+    <input type="text" id="id" ng-model="id" placeholder="Project Id" /><br>
+
+    <span for="name">Project Name</span><br>
+    <input type="text" id="name" ng-model="name" placeholder="My Pet Project" /><br>
+
+    <span for="amountToBeRaised">Target Amount</span><br>
+    <input type="number" id="amountToBeRaised" ng-model="amountToBeRaised" placeholder="100" />
+    <br>
+
+    <span for="deadline">Deadline in Minutes</span><br>
+    <input type="number" id="deadline" ng-model="deadline" placeholder="10" /><br>
+    
+    <button id="createProject" ng-click="createProject(id,name,amountToBeRaised,deadline)">Create Project
+    </button>
+  
+
+  <div>
+      <span> Available Projects </span><br>
+
+      <table border="1">
+        <tr>
+          <td>Id</td>
+          <td>Name</td>
+          <td>Amount To Be Raised</td>
+          <td>Amount Raised So Far</td>
+          <td>Contribute</td>
+          <td></td>
+        </tr>
+        <tr ng-repeat="project in projects">
+            <td>{{ project.id }} </td>
+            <td>{{ project.name }} </td>
+            <td>{{ project.amountToBeRaised }} </td>
+            <td>{{ project.amountRaisedSoFar }} </td>
+            <td><input type="text" id="contribution" ng-model="contribution" size="3" maxlength="3"/></td>
+            <td><button id="Contribute" ng-click="contribute(project.id,contribution)">contribute</button></td>
+        </tr>
+      </table>
+  </div>
+</fieldset>
+  <!-- <pre>{{projects}}</pre> -->
+
+</body>
+</html>

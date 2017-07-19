@@ -1,0 +1,22 @@
+contract WarehouseI {
+    function ship(uint id, address customer) returns (bool handled);
+}
+
+contract Store {
+    address wallet;
+    WarehouseI warehouse;
+
+    function Store(address _wallet, address _warehouse) {
+        wallet = _wallet;
+        warehouse = WarehouseI(_warehouse);
+    }
+
+    function purchase(uint id) returns (bool success) {
+        wallet.send(msg.value);
+        return warehouse.ship(id, msg.sender);
+    }
+}
+
+Bug
+
+1 The program must check for the return value of wallet.send(msg.value) and it should do the shipment only if the metod returns true.

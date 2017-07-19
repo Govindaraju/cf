@@ -1,0 +1,28 @@
+
+contract PiggyBank {
+    address owner;
+    uint248 balance;
+
+    function piggyBank() {
+        owner = msg.sender;
+        balance += uint248(msg.value);
+    }
+
+    function () {
+        if (msg.sender != owner) throw;
+        balance += uint248(msg.value);
+    }
+
+    function kill() {
+        if (msg.sender != owner) throw;
+        selfdestruct(owner);
+    }
+}
+
+Bug:
+
+1. Constructorshould be same as the contractname so in here it should be PiggyBank and not piggyBank
+2. pragma solidity ^0.4.0 if this is the compiler version then it compiles well, however if we want to use a higher version,
+all functions that accept a value should have payable qualifierr.
+3. In more higher version of solidity throw is depricated.
+
